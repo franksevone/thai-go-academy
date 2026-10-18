@@ -1,0 +1,22 @@
+{
+  "name": "thai-go-academy",
+  "version": "1.0.0",
+  "private": true,
+  "description": "โปรแกรมสอนและฝึกเล่นหมากล้อมภาษาไทยแบบโต้ตอบ พร้อมระบบโค้ช AI อัจฉริยะ (Thai Go Academy with AI Coach)",
+  "keywords": [
+    "go",
+    "baduk",
+    "weiqi",
+    "หมากล้อม",
+    "ai-coach",
+    "tsumego",
+    "joseki"
+  ],
+  "author": "FrankenSO",
+  "license": "MIT",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve .",
+    "build": "echo Build completed"
+  }
+}

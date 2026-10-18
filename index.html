@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Go Academy Thailand — โปรแกรมสอนและฝึกเล่นหมากล้อม (โกะ) แบบโต้ตอบ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-stones">
+          <div class="stone-icon black"></div>
+          <div class="stone-icon white"></div>
+        </div>
+        <div>
+          <div class="brand-title">Go Academy — ครูสอนหมากล้อม (โกะ)</div>
+          <div class="brand-subtitle">เรียนรู้กติกา • แบบฝึกหัดซึเมะโกะ &amp; เทซูจิ • การแก้ทาง &amp; โจเซกิ • ซ้อมมือกับโค้ช AI</div>
+        </div>
+      </div>
+
+      <nav class="main-nav" aria-label="เมนูหลัก">
+        <button class="nav-tab active" data-tab="lessons">📚 1. บทเรียนพื้นฐาน (8 บท)</button>
+        <button class="nav-tab" data-tab="puzzles">🧩 2. โจทย์ฝึกหัด &amp; แก้ทาง (24 ข้อ)</button>
+        <button class="nav-tab" data-tab="situations">🧭 3. แนวทางแต่ละสถานการณ์ &amp; โจเซกิ (11 หัวข้อ)</button>
+        <button class="nav-tab" data-tab="practice">⚔️ 4. กระดานซ้อมมือ &amp; โค้ช AI</button>
+        <button class="nav-tab" data-tab="glossary">📖 5. คำศัพท์ &amp; สุภาษิต</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Workspace Container -->
+  <main class="app-container">
+
+    <!-- 2-Column Interactive Workspace (Board on Left, Content/Controls on Right) -->
+    <div id="main-workspace-grid" class="workspace-grid">
+
+      <!-- Left Column: Interactive Go Board -->
+      <section class="board-column" aria-label="กระดานหมากล้อม">
+        <div class="board-status-bar">
+          <div class="turn-indicator">
+            <span id="status-turn-dot" class="turn-dot black"></span>
+            <span id="status-turn-text">ตาของ หมากดำ (Black)</span>
+          </div>
+
+          <div class="captures-bar">
+            <span id="board-size-badge" class="badge badge-gold">กระดาน 9×9</span>
+            <span class="capture-pill" title="จำนวนหมากขาวที่หมากดำจับกินได้">
+              ⚫ เชลยที่ดำจับได้: <span id="cap-black-count">0</span>
+            </span>
+            <span class="capture-pill" title="จำนวนหมากดำที่หมากขาวจับกินได้">
+              ⚪ เชลยที่ขาวจับได้: <span id="cap-white-count">0</span>
+            </span>
+            <button id="btn-toggle-zen-board" class="btn btn-outline btn-sm zen-toggle-btn" title="ขยายกระดานเต็มหน้าจอ / ซ่อนแถบเมนู (เหมาะสำหรับสมาร์ทโฟนและกระดาน 19×19)">
+              📱 <span id="zen-btn-text">ขยายเต็มจอ (ซ่อนเมนู)</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="board-canvas-wrapper">
+          <canvas id="go-board-canvas" width="600" height="600"></canvas>
+        </div>
+
+        <!-- Live Hover Inspector -->
+        <div id="hover-inspector-bar" class="hover-inspector">
+          <span>🔍 เลื่อนเมาส์ชี้บนกระดานเพื่อตรวจสอบจำนวนลมหายใจ กลุ่มหมาก หรือจุดห้ามวาง</span>
+          <span class="inspector-badge">พร้อมใช้งาน</span>
+        </div>
+
+        <!-- Board Display Toggles -->
+        <div class="board-toggles">
+          <label class="toggle-chip" title="แสดงตัวเลขจำนวนลมหายใจของแต่ละกลุ่มหมากและเตือนเมื่อติดอาตาริ">
+            <input type="checkbox" id="toggle-liberties" checked />
+            <span>แสดงจำนวนลมหายใจ &amp; เตือนอาตาริ</span>
+          </label>
+          <label class="toggle-chip" title="แสดงพื้นที่ของหมากดำและหมากขาวบนกระดาน">
+            <input type="checkbox" id="toggle-territory" />
+            <span>แสดงการประเมินพื้นที่ (Territory)</span>
+          </label>
+          <label class="toggle-chip" title="แสดงตัวเลขลำดับตาเดินบนเม็ดหมาก">
+            <input type="checkbox" id="toggle-movenums" />
+            <span>แสดงเลขลำดับตาเดิน</span>
+          </label>
+          <label class="toggle-chip" title="เปิด/ปิดเสียงวางหมาก">
+            <input type="checkbox" id="toggle-sound" checked />
+            <span>🔊 เสียงวางหมาก</span>
+          </label>
+        </div>
+      </section>
+
+      <!-- Right Column: Dynamic Module Panel -->
+      <section id="right-panel-content" class="content-column" aria-live="polite"></section>
+
+    </div>
+
+    <!-- Mobile Floating Drawer Handle when in Zen Mode -->
+    <div id="mobile-zen-drawer-handle" class="mobile-zen-drawer-handle">
+      <button id="btn-toggle-mobile-drawer" class="btn btn-gold btn-sm drawer-pill-btn">
+        📖 <span id="drawer-toggle-text">เปิดแผงคำแนะนำ &amp; ข้อมูลบทเรียน</span> ⬆️
+      </button>
+    </div>
+
+    <!-- Full-Width Glossary & Proverbs View -->
+    <section id="glossary-full-view" style="display: none;"></section>
+
+  </main>
+
+  <!-- Scripts -->
+  <script src="js/engine.js"></script>
+  <script src="js/board-ui.js"></script>
+  <script src="js/lessons-data.js"></script>
+  <script src="js/puzzles-data.js"></script>
+  <script src="js/situations-data.js"></script>
+  <script src="js/ai-coach.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
